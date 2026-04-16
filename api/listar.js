@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
       port: process.env.DB_PORT
     });
 
-    const [rows] = await conn.execute("SELECT * FROM agentes");
+    const [rows] = await conn.execute("SELECT * FROM AGENTE");
 
     res.status(200).json(rows);
 
