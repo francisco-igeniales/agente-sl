@@ -2,7 +2,7 @@ const mysql = require('mysql2/promise');
 
 module.exports = async (req, res) => {
   try {
-    const { nombre } = req.body;
+    const { codage, nomage, ruta } = req.body;
 
     const conn = await mysql.createConnection({
       host: process.env.DB_HOST,
@@ -12,7 +12,10 @@ module.exports = async (req, res) => {
       port: process.env.DB_PORT
     });
 
-    await conn.execute("INSERT INTO AGENTE (AG_CODAGE, AG_NOMAGE, AG_RUTA, AG_FOTO) VALUES ('00008','FRANCISCO PANTOJA','SALAMANCA','No Aplica')");
+    await conn.execute(
+      "INSERT INTO AGENTE (AG_CODAGE, AG_NOMAGE, AG_RUTA) VALUES (?, ?, ?)",
+      [codage, nomage, ruta]
+    );
 
     res.status(200).json({ mensaje: "Insertado correctamente" });
 
