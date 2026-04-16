@@ -2,8 +2,6 @@ const mysql = require('mysql2/promise');
 
 module.exports = async (req, res) => {
   try {
-    const { nombre } = req.body;
-
     const conn = await mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -12,9 +10,9 @@ module.exports = async (req, res) => {
       port: process.env.DB_PORT
     });
 
-    await conn.execute("INSERT INTO AGENTE (AG_CODAGE, AG_NOMAGE, AG_RUTA, AG_FOTO) VALUES ('00008','FRANCISCO PANTOJA','SALAMANCA','No Aplica')");
+    const [rows] = await conn.execute("SELECT * FROM agentes");
 
-    res.status(200).json({ mensaje: "Insertado correctamente" });
+    res.status(200).json(rows);
 
   } catch (error) {
     res.status(500).json({ error: error.message });
