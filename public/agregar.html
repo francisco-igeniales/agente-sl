@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agregar Agente</title>
+</head>
+<body>
+
+<h1>Agregar Agente</h1>
+
+<form onsubmit="guardar(event)">
+  <input type="text" id="codage" placeholder="Código" required><br><br>
+  <input type="text" id="nomage" placeholder="Nombre" required><br><br>
+  <input type="text" id="ruta" placeholder="Ruta" required><br><br>
+
+  <button type="submit">Guardar</button>
+</form>
+
+<br>
+<button onclick="location.href='index.html'">Regresar</button>
+
+<script>
+async function guardar(e) {
+  e.preventDefault();
+
+  const data = {
+    codage: document.getElementById("codage").value,
+    nomage: document.getElementById("nomage").value,
+    ruta: document.getElementById("ruta").value
+  };
+
+  const res = await fetch('/api/agregar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.mensaje || result.error);
+}
+</script>
+
+</body>
+</html>
